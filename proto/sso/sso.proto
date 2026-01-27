@@ -1,0 +1,38 @@
+syntax = "proto3";
+
+package auth;
+
+option go_package = "chekalin.sso.v1;ssoy1";
+
+service Auth {
+    rpc Register (RegisterRequest) returns (RegisterResponse);
+    rpc Login (LoginRequest) returns (LoginResponse);
+    rpc IsAdmin (isAdminRequest) returns (isAdminResponse);
+}
+
+message RegisterRequest {
+    string email = 1; // Email пользователя для регистрации
+    string password = 2; // Пароль пользователя для регистрации
+}
+
+message RegisterResponse {
+    int64 user_id = 1; // Уникальный идентификатор зарегистрированного пользователя
+}
+
+message LoginRequest {
+    string email = 1; // Email пользователя для входа
+    string password = 2; // Пароль пользователя для входа
+    int32 app_id = 3; // Идентификатор приложения, из которого выполняется вход
+}
+
+message LoginResponse {
+    string token = 1; // Токен аутентификации для доступа к защищенным ресурсам
+}
+
+message isAdminRequest {
+    int64 user_id = 1; // Уникальный идентификатор пользователя
+}
+
+message isAdminResponse {
+    bool is_admin = 1; // Флаг, указывающий, является ли пользователь администратором
+}
